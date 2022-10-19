@@ -28,7 +28,9 @@ function helperFormatMoney(value) {
 }
 
 function helperFormatPercent(value) {
-    return value.toFixed(2).replace('.', ',') + '%';
+    let percent = value.toFixed(2).replace('.', ',') + '%';
+    percent = value > 0 ? '+' + percent : percent;
+    return percent;
 }
 
 export {helperFormatMonthYear, helperFormatMoney, helperFormatPercent}
