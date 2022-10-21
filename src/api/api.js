@@ -1,3 +1,9 @@
+import axiosModule from 'axios'
+
+const axios = axiosModule.create({
+    baseURL: 'http://localhost:3001'
+})
+
 const backend = {
     "investments": [
         {
@@ -621,8 +627,13 @@ const backend = {
     ]
 }
 
-function apiGetInvestments() {
-    const { investments, reports } = backend;
+async function apiGetInvestments() {
+    //const { investments, reports } = backend;
+    
+    const [{data: investments}, {data: reports}] = await Promise.all([
+        axios.get('/investments'),
+        axios.get('/reports')
+    ]);
     
     let result = investments.sort((a,b) => 
         a.description.localeCompare(b.description)

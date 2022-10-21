@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { apiGetInvestments } from './api/api'
 import { ColorValue, Header, Main } from './components'
 import { 
@@ -48,7 +49,19 @@ function Title3({children}) {
 
 export default function App() {
 
-  const investments = apiGetInvestments()
+  const [investments, setInvestments] = useState([]);
+
+  useEffect(() => {
+    async function getInvestments() {
+      const backendInvestments = await apiGetInvestments();
+      setInvestments(backendInvestments);
+    }
+    getInvestments();
+  }, []);
+
+  if(!investments) {
+    return <p>Carregando...</p>
+  }
 
   return (
     <>
